@@ -1,13 +1,19 @@
 using UnityEngine;
 
+[RequireComponent (typeof(PlayerHealth))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] GameInput gameInput;
-    [SerializeField] float moveSpeed = 6;
+    [Header(" Components ")]
+    private PlayerHealth playerHealth;
 
+    [Header(" Elements ")]
+    [SerializeField] GameInput gameInput;
+
+    [Header(" Settings ")]
+    [SerializeField] float moveSpeed = 6;
     Rigidbody2D rb;
 
-
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -22,5 +28,10 @@ public class Player : MonoBehaviour
     {
 
         rb.linearVelocity = gameInput.InputMovementNormalized * moveSpeed;
+    }
+
+    public void TakeDamage(int damage)
+    {
+
     }
 }
