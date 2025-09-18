@@ -1,29 +1,23 @@
+using System.Threading;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [Header(" Element ")]
+    [Header(" Elements ")]
     private Player player;
 
-    [Header(" Setting ")]
+    [Header(" Settings ")]
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float playerDectectionRadius;
 
-    private void Start()
+
+    public void StorePlayer(Player player)
     {
-        player = FindFirstObjectByType<Player>();
-
-        if(player == null)
-        {
-            Debug.Log("No player found! Auto destroying object");
-            Destroy(gameObject);
-        }
+        this.player = player;
     }
 
     private void Update()
     {
         FollowPlayer();
-        TryAttack();
     }
 
     private void FollowPlayer()
@@ -33,20 +27,5 @@ public class EnemyMovement : MonoBehaviour
         Vector2 targetDirection = (Vector2)transform.position + direction * moveSpeed * Time.deltaTime;
 
         transform.position = targetDirection;
-    }
-
-    private void TryAttack()
-    {
-        float distanceToPlayer = Vector2.Distance(player.transform.position, transform.position);
-
-        if (distanceToPlayer <= playerDectectionRadius) {
-            Destroy(gameObject);
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, playerDectectionRadius);
     }
 }
