@@ -1687,8 +1687,8 @@ GameObject:
   - component: {fileID: 1742308282}
   - component: {fileID: 1742308281}
   - component: {fileID: 1742308284}
-  - component: {fileID: 1742308286}
   - component: {fileID: 1742308285}
+  - component: {fileID: 1742308286}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1831,7 +1831,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 340a292d258bf7b4d8e03925413e637d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  health: 10
 --- !u!1 &1795934379
 GameObject:
   m_ObjectHideFlags: 0

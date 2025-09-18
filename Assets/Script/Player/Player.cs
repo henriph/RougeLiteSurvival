@@ -1,10 +1,10 @@
 using UnityEngine;
 
-[RequireComponent (typeof(PlayerHealth))]
+
 public class Player : MonoBehaviour
 {
     [Header(" Components ")]
-    private PlayerHealth playerHealth;
+    [SerializeField] private int playerHealth;
 
     [Header(" Elements ")]
     [SerializeField] GameInput gameInput;
@@ -32,6 +32,6 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-
+         playerHealth -= damage;
     }
 }
