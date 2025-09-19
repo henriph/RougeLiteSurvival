@@ -1,22 +1,27 @@
 using UnityEngine;
 
-
+[RequireComponent (typeof(PlayerHealth))]
 public class Player : MonoBehaviour
 {
     [Header(" Components ")]
-    [SerializeField] private int playerHealth;
+    Rigidbody2D rb;
+    private PlayerHealth playerHealth;
+    
 
     [Header(" Elements ")]
     [SerializeField] GameInput gameInput;
 
     [Header(" Settings ")]
     [SerializeField] float moveSpeed = 6;
-    Rigidbody2D rb;
 
-    
+    private void Awake()
+    {
+        playerHealth = GetComponent<PlayerHealth>();
+        rb = GetComponent<Rigidbody2D>();
+    }
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+       
     }
 
     private void Update()
@@ -32,6 +37,8 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-         playerHealth -= damage;
+        playerHealth.TakeDamage(damage);
     }
+
+    
 }
