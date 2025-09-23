@@ -8,6 +8,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float range;
     [SerializeField] private LayerMask enemyMask;
 
+    [Header(" Animations ")]
+    [SerializeField] private float aimLerp;
+
     [Header(" Debug ")]
     [SerializeField] private bool gizmos;
 
@@ -18,16 +21,21 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
+        AutoAim();
+    }
+
+    private Enemy ClosestEnemy()
+    {
         Enemy closestEnemy = null;
 
         float minDistance = range;
 
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, range, enemyMask);
+        
 
-        if(enemies.Length <= 0)
+        if (enemies.Length <= 0)
         {
-            transform.up = Vector3.up;
-            return;
+            return null;
         }
 
         for (int i = 0; i < enemies.Length; i++)
@@ -46,13 +54,18 @@ public class Weapon : MonoBehaviour
             }
         }
 
-        if (closestEnemy == null) {
+        return closestEnemy;
+    }
+    private void AutoAim()
+    {
+        Vector2 targetUpVector = Vector3.up;
+        Enemy closestEnemy = ClosestEnemy();
 
-            transform.up = Vector3.up;
-            return;
+        if (closestEnemy != null) {
+            targetUpVector = (closestEnemy.transform.position - transform.position).normalized;
         }
 
-        transform.up = (closestEnemy.transform.position - transform.position).normalized;
+        transform.up = Vector3.Lerp(transform.up, targetUpVector, Time.deltaTime * aimLerp);
     }
 
     private void OnDrawGizmos()
