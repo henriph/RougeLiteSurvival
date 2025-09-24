@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
 
     [Header(" Settings ")]
     [SerializeField] private float playerDectectionRadius;
+    [SerializeField] private int enemyHealth;
 
     [Header(" Effects")]
 
@@ -73,6 +74,20 @@ public class Enemy : MonoBehaviour
         Debug.Log("Dealing " + damage + " to player");
         player.TakeDamage(damage);
     }
+
+    public void TakeDamage(int damage)
+    {
+        int realDamage = Mathf.Min(enemyHealth, damage);
+        enemyHealth -= realDamage;
+
+        Debug.Log("Enemy took " + realDamage);
+
+        if(enemyHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 
     private void OnDrawGizmos()
     {

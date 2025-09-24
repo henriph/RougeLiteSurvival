@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   playerDectectionRadius: 0.5
+  enemyHealth: 10
   damage: 1
   attackFrequency: 1
   gizmos: 1
