@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 [RequireComponent (typeof(EnemyMovement))]
 public class Enemy : MonoBehaviour
@@ -11,7 +12,12 @@ public class Enemy : MonoBehaviour
 
     [Header(" Settings ")]
     [SerializeField] private float playerDectectionRadius;
-    [SerializeField] private int enemyHealth;
+    
+
+    [Header(" Health ")]
+    [SerializeField] private int maxHealth;
+    private int health;
+    [SerializeField] private TextMeshPro healthText;
 
     [Header(" Effects")]
 
@@ -31,6 +37,9 @@ public class Enemy : MonoBehaviour
     }
     private void Start()
     {
+        health = maxHealth;
+        healthText.text = health.ToString();
+
         if (player == null)
         {
             Debug.Log("No player found! Auto destroying object");
@@ -77,12 +86,14 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        int realDamage = Mathf.Min(enemyHealth, damage);
-        enemyHealth -= realDamage;
+        int realDamage = Mathf.Min(health, damage);
+        health -= realDamage;
+
+        healthText.text = health.ToString();
 
         Debug.Log("Enemy took " + realDamage);
 
-        if(enemyHealth <= 0)
+        if(health <= 0)
         {
             Destroy(gameObject);
         }

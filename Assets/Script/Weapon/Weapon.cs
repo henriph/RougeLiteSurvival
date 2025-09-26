@@ -36,8 +36,11 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
+        attackDelay = 1f / attackFrequency;
         state = State.Idle;
     }
+
+    
 
     private void Update()
     {
@@ -104,6 +107,11 @@ public class Weapon : MonoBehaviour
 
     private void StartAttack()
     {
+        float animationSpeedMultiplier = attackFrequency;
+
+        // Set the animator speed to match the frequency
+        animator.speed = animationSpeedMultiplier;
+
         animator.Play("Attack");
         state = State.Attack;
 
