@@ -17,10 +17,10 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        FollowPlayer();
+        //FollowPlayer();
     }
 
-    private void FollowPlayer()
+    public void FollowPlayer()
     {
         Vector2 direction = (player.transform.position - transform.position).normalized;
 

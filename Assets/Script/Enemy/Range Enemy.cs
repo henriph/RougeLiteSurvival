@@ -1,18 +1,20 @@
 using UnityEngine;
 using TMPro;
 
-[RequireComponent (typeof(EnemyMovement))]
-public class Enemy : MonoBehaviour
+[RequireComponent(typeof(EnemyMovement), typeof(RangeEnemyAttack))]
+
+public class RangeEnemy : MonoBehaviour
 {
     [Header(" Components ")]
     private EnemyMovement movement;
+    private RangeEnemyAttack attack;
 
     [Header(" Elements ")]
     private Player player;
 
     [Header(" Settings ")]
     [SerializeField] private float playerDectectionRadius;
-    
+
 
     [Header(" Health ")]
     [SerializeField] private int maxHealth;
@@ -22,10 +24,7 @@ public class Enemy : MonoBehaviour
     [Header(" Effects")]
 
     [Header(" Attack ")]
-    [SerializeField] private int damage;
-    [SerializeField] private float attackFrequency;
-    private float attackDelay;
-    private float attackTimer;
+    
 
     [Header(" Debug ")]
     [SerializeField] private bool gizmos;
@@ -33,7 +32,10 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         movement = GetComponent<EnemyMovement>();
+        attack = GetComponent<RangeEnemyAttack>();
         player = FindFirstObjectByType<Player>();
+
+        attack.StorePlayer(player);
     }
     private void Start()
     {
@@ -46,45 +48,36 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
 
-        attackDelay = 1f / attackFrequency;
         movement.StorePlayer(player);
     }
 
     private void Update()
     {
-        if (attackTimer >= attackDelay)
+        ManageAttack();
+
+        
+    }
+
+    private void ManageAttack()
+    {
+        float distanceToPlayer = Vector2.Distance(player.transform.position, transform.position);
+
+        if (distanceToPlayer > playerDectectionRadius)
         {
-            TryAttack();
-            attackTimer = 0f;
+            movement.FollowPlayer();
         }
         else
         {
-            Wait();
+            TryAttack();
         }
-
-        movement.FollowPlayer();
     }
 
     private void TryAttack()
     {
-        float distanceToPlayer = Vector2.Distance(player.transform.position, transform.position);
-
-        if (distanceToPlayer <= playerDectectionRadius)
-        {
-            Attack();
-        }
+        attack.AutoAim();
     }
 
-    private void Wait()
-    {
-        attackTimer += Time.deltaTime;
-    }
-
-    private void Attack()
-    {
-        Debug.Log("Dealing " + damage + " to player");
-        player.TakeDamage(damage);
-    }
+    
 
     public void TakeDamage(int damage)
     {
@@ -95,7 +88,7 @@ public class Enemy : MonoBehaviour
 
         Debug.Log("Enemy took " + realDamage);
 
-        if(health <= 0)
+        if (health <= 0)
         {
             Destroy(gameObject);
         }
