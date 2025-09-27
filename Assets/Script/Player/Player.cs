@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     [Header(" Components ")]
     Rigidbody2D rb;
     private PlayerHealth playerHealth;
-    
+    private CircleCollider2D playerCollider;
 
     [Header(" Elements ")]
     [SerializeField] GameInput gameInput;
@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     {
         playerHealth = GetComponent<PlayerHealth>();
         rb = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<CircleCollider2D>();
     }
     private void Start()
     {
@@ -38,6 +39,11 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         playerHealth.TakeDamage(damage);
+    }
+
+    public Vector2 GetCenter()
+    {
+        return playerCollider.bounds.center;
     }
 
     

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class RangeEnemyAttack : MonoBehaviour
@@ -5,9 +6,11 @@ public class RangeEnemyAttack : MonoBehaviour
     [Header(" Elements ")]
     private Player player;
     [SerializeField] private Transform shootingPoint;
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private EnemyBullet bulletPrefab;
+    
 
     [Header(" Settings ")]
+    
 
     [Header(" Attack ")]
     [SerializeField] private int damage;
@@ -50,13 +53,12 @@ public class RangeEnemyAttack : MonoBehaviour
     }
 
     private void Shoot() {
-        Vector2 direction = (player.transform.position - shootingPoint.position).normalized;
-        gizmosDirection = direction;
+        
+        Vector2 direction = (player.GetCenter() - (Vector2)shootingPoint.position).normalized;
+
+        EnemyBullet bulletInstance = Instantiate(bulletPrefab, shootingPoint.position, Quaternion.identity);
+        bulletInstance.Shoot(damage, direction);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.white;
-        Gizmos.DrawLine(shootingPoint.position, (Vector2)transform.position + gizmosDirection * 5);
-    }
+    
 }
