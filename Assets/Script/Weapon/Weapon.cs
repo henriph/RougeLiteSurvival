@@ -14,6 +14,7 @@ public class Weapon : MonoBehaviour
     [Header(" Elements ")]
     [SerializeField] private Transform hitDetectionTransform;
     [SerializeField] private float hitDectionRadius;
+    private BoxCollider2D hitCollider;
 
     [Header(" Settings ")]
     [SerializeField] private float range;
@@ -36,6 +37,7 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
+        hitCollider = hitDetectionTransform.GetComponent<BoxCollider2D>();
         attackDelay = 1f / attackFrequency;
         state = State.Idle;
     }
@@ -65,6 +67,7 @@ public class Weapon : MonoBehaviour
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, range, enemyMask);
         
 
+
         if (enemies.Length <= 0)
         {
             return null;
@@ -90,7 +93,15 @@ public class Weapon : MonoBehaviour
     }
     private void Attack()
     {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(hitDetectionTransform.position, hitDectionRadius, enemyMask);
+        //Collider2D[] enemies = Physics2D.OverlapCircleAll(hitDetectionTransform.position, hitDectionRadius, enemyMask);
+
+        Collider2D[] enemies = Physics2D.OverlapBoxAll
+            (
+            hitDetectionTransform.position,
+            hitCollider.bounds.size,
+            hitDetectionTransform.localEulerAngles.z,
+            enemyMask
+            );
 
         for (int i = 0; i < enemies.Length; i++)
         {

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class RangeEnemyAttack : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class RangeEnemyAttack : MonoBehaviour
     private float attackDelay;
     private float attackTimer;
 
+    [Header(" Bullet Pooling ")]
+    private ObjectPool<EnemyBullet> bulletPool;
+
     [Header(" Debug ")]
     Vector2 gizmosDirection;
     
@@ -25,12 +29,44 @@ public class RangeEnemyAttack : MonoBehaviour
     {
         attackDelay = 1f / attackFrequency;
         attackTimer = attackDelay;
-    }
 
+        bulletPool = new ObjectPool<EnemyBullet>(CreateFunction, ActionOnGet, ActionOnRelease, ActionOnDestroy);
+    }
+    
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private EnemyBullet CreateFunction()
+    {
+        EnemyBullet bulletInstance = Instantiate(bulletPrefab, shootingPoint.position, Quaternion.identity);
+        bulletInstance.Configure(this);
+        return bulletInstance;
+    }
+
+    private void ActionOnGet(EnemyBullet bullet)
+    {
+        bullet.Reload();
+        bullet.transform.position = shootingPoint.position;
+
+        bullet.gameObject.SetActive(true);
+    }
+
+    private void ActionOnRelease(EnemyBullet bullet)
+    {
+        bullet.gameObject.SetActive(false);
+    }
+
+    private void ActionOnDestroy(EnemyBullet bullet)
+    {
+        Destroy(bullet.gameObject);
+    }
+
+    public void ReleaseBullet(EnemyBullet bullet)
+    {
+        bulletPool.Release(bullet);
     }
 
     public void StorePlayer(Player player)
@@ -56,7 +92,7 @@ public class RangeEnemyAttack : MonoBehaviour
         
         Vector2 direction = (player.GetCenter() - (Vector2)shootingPoint.position).normalized;
 
-        EnemyBullet bulletInstance = Instantiate(bulletPrefab, shootingPoint.position, Quaternion.identity);
+        EnemyBullet bulletInstance = bulletPool.Get();
         bulletInstance.Shoot(damage, direction);
     }
 
