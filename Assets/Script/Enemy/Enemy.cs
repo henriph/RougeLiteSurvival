@@ -62,8 +62,6 @@ public abstract class Enemy : MonoBehaviour
 
         healthText.text = health.ToString();
 
-        Debug.Log("Enemy took " + realDamage);
-
         if (health <= 0)
         {
             Destroy(gameObject);

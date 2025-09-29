@@ -3,37 +3,88 @@ using NUnit.Framework;
 using UnityEngine;
 using NaughtyAttributes;
 
-
+[RequireComponent(typeof(WaveManagerUI))]
 public class WaveManager : MonoBehaviour
 {
     [Header(" Elements ")]
     [SerializeField] private Player player;
+    private WaveManagerUI ui;
 
     [Header(" Settings ")]
     [SerializeField] private float waveDuration;
     private float timer;
+    private bool isTimerOn;
+    private int currentWaveIndex;
 
     [Header(" Waves ")]
     [SerializeField] private Wave[] waves;
     private List<float> localCounters = new List<float>();
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Awake()
     {
-        localCounters.Add(1);
+        ui = GetComponent<WaveManagerUI>();
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        StartWave(currentWaveIndex);
+    }
+
+   
     void Update()
     {
+        if (!isTimerOn)
+        {
+            return;
+        }
+
         if (timer < waveDuration)
         {
             ManageCurrentWave();
+
+            string timerString = ((int)(waveDuration - timer)).ToString();
+            ui.UpdateTimerText(timerString);
+        } else
+        {
+            StartWaveTransition();
+        }
+    }
+
+    private void StartWave(int waveIndex)
+    {
+        Debug.Log("Start Wave " +  waveIndex);
+        string waveString = "Wave " + (waveIndex + 1).ToString();
+        ui.UpdateWaveText(waveString);
+
+        localCounters.Clear();
+        foreach (WaveSegment segment in waves[waveIndex].segments) {
+            localCounters.Add(1);
+        }
+
+        timer = 0;
+        isTimerOn = true;
+    }
+
+    private void StartWaveTransition()
+    {
+        isTimerOn = false;
+
+        DefeatAllEnemies();
+        currentWaveIndex++;
+
+        if (currentWaveIndex >= waves.Length)
+        {
+            Debug.Log("Waves completed!");
+        }
+        else
+        {
+            StartWave(currentWaveIndex);
         }
     }
 
     private void ManageCurrentWave()
     {
-        Wave currentWave = waves[0];
+        Wave currentWave = waves[currentWaveIndex];
 
         for (int i = 0; i < currentWave.segments.Count; i++)
         {
@@ -67,10 +118,20 @@ public class WaveManager : MonoBehaviour
         Vector2 offset = direction.normalized * Random.Range(6, 10);
         Vector2 targetPosition = (Vector2)player.transform.position + offset;
 
-        targetPosition.x = Mathf.Clamp(targetPosition.x, -18, 18);
-        targetPosition.y = Mathf.Clamp(targetPosition.y, -8, 8);
+        targetPosition.x = Mathf.Clamp(targetPosition.x, -14, 14);
+        targetPosition.y = Mathf.Clamp(targetPosition.y, -7, 7);
 
         return targetPosition;
+    }
+
+    private void DefeatAllEnemies()
+    {
+        while (transform.childCount > 0)
+        {
+            Transform child = transform.transform.GetChild(0);
+            child.SetParent(null);
+            Object.Destroy(child.gameObject);
+        }
     }
 }
 
