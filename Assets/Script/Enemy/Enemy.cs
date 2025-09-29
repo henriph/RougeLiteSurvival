@@ -1,89 +1,58 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using System;
 
-[RequireComponent (typeof(EnemyMovement))]
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     [Header(" Components ")]
-    private EnemyMovement movement;
+    protected EnemyMovement movement;
 
     [Header(" Elements ")]
-    private Player player;
+    protected Player player;
 
     [Header(" Settings ")]
-    [SerializeField] private float playerDectectionRadius;
-    
+    [SerializeField] protected float playerDectectionRadius;
 
     [Header(" Health ")]
-    [SerializeField] private int maxHealth;
-    private int health;
-    [SerializeField] private TextMeshPro healthText;
+    [SerializeField] protected int maxHealth;
+    protected int health;
+    [SerializeField] protected TextMeshPro healthText;
 
-    [Header(" Effects")]
-
-    [Header(" Attack ")]
-    [SerializeField] private int damage;
-    [SerializeField] private float attackFrequency;
-    private float attackDelay;
-    private float attackTimer;
 
     [Header(" Debug ")]
-    [SerializeField] private bool gizmos;
+    [SerializeField] protected bool gizmos;
 
-    private void Awake()
+
+    protected virtual void Awake()
     {
         movement = GetComponent<EnemyMovement>();
         player = FindFirstObjectByType<Player>();
     }
-    private void Start()
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    protected virtual void Start()
     {
         health = maxHealth;
         healthText.text = health.ToString();
 
         if (player == null)
         {
-            Debug.Log("No player found! Auto destroying object");
+            Debug.LogError("No player found! Auto destroying object!");
             Destroy(gameObject);
+            return;
         }
 
-        attackDelay = 1f / attackFrequency;
         movement.StorePlayer(player);
     }
 
-    private void Update()
+    protected bool IsPlayerInRange()
     {
-        if (attackTimer >= attackDelay)
+        if(player == null)
         {
-            TryAttack();
-            attackTimer = 0f;
-        }
-        else
-        {
-            Wait();
+            return false;
         }
 
-        movement.FollowPlayer();
-    }
-
-    private void TryAttack()
-    {
-        float distanceToPlayer = Vector2.Distance(player.transform.position, transform.position);
-
-        if (distanceToPlayer <= playerDectectionRadius)
-        {
-            Attack();
-        }
-    }
-
-    private void Wait()
-    {
-        attackTimer += Time.deltaTime;
-    }
-
-    private void Attack()
-    {
-        Debug.Log("Dealing " + damage + " to player");
-        player.TakeDamage(damage);
+        return Vector2.Distance(player.transform.position, transform.position) <= playerDectectionRadius;
     }
 
     public void TakeDamage(int damage)
@@ -95,12 +64,11 @@ public class Enemy : MonoBehaviour
 
         Debug.Log("Enemy took " + realDamage);
 
-        if(health <= 0)
+        if (health <= 0)
         {
             Destroy(gameObject);
         }
     }
-
 
     private void OnDrawGizmos()
     {
