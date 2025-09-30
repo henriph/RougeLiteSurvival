@@ -49,9 +49,9 @@ public class EnemyBullet : MonoBehaviour
             
             bulletCollider.enabled = false;
             rangeEnemyAttack.ReleaseBullet(this);
-        }
 
-        if(collider.CompareTag("Wall"))
+
+        } else if(collider.CompareTag("Wall"))
         {
             rangeEnemyAttack.ReleaseBullet(this);
         }

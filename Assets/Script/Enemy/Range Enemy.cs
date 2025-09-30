@@ -30,7 +30,7 @@ public class RangeEnemy : Enemy
     {
         ManageAttack();
 
-        transform.localScale = player.transform.position.x > transform.position.x ? Vector3.one : Vector3.one.With(x: -1);   ;
+        transform.localScale = player.transform.position.x > transform.position.x ? Vector3.one : new Vector3(-1, 1, 1);
     }
 
     private void ManageAttack()

@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 374725760}
   - component: {fileID: 374725762}
   m_Layer: 0
-  m_Name: DeBonk
+  m_Name: MeleeWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 443996277}
   - component: {fileID: 443996278}
   m_Layer: 0
-  m_Name: DaveSprite
+  m_Name: PlayerRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -719,7 +719,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.003557682, y: 0.43387237}
+  m_Offset: {x: -0.003557682, y: 0.3343185}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -729,7 +729,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 4.0327673, y: 2.3506339}
+  m_Size: {x: 4.0327673, y: 2.1515265}
   m_EdgeRadius: 0
 --- !u!1 &519420028
 GameObject:
@@ -1167,7 +1167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
   player: {fileID: 1742308284}
-  waveDuration: 10
+  waveDuration: 20
   waves:
   - name: Wave 00
     segments:
@@ -1175,12 +1175,12 @@ MonoBehaviour:
       spawnFrequency: 4
       prefab: {fileID: 7937752903491371544, guid: 682e3219dd2a1bf48860426fe4eca225, type: 3}
     - tStartEnd: {x: 33, y: 100}
-      spawnFrequency: 2
+      spawnFrequency: 4
       prefab: {fileID: 3083476623290775952, guid: 017981be49815ee4faddf12f8a0e05b1, type: 3}
   - name: Wave 01
     segments:
     - tStartEnd: {x: 0, y: 30}
-      spawnFrequency: 2
+      spawnFrequency: 10
       prefab: {fileID: 3083476623290775952, guid: 017981be49815ee4faddf12f8a0e05b1, type: 3}
 --- !u!114 &681592768
 MonoBehaviour:
@@ -1354,12 +1354,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 941874b761c5368458e28e8f568fda89, type: 3}
+  m_Sprite: {fileID: -1955448553306655712, guid: 02098e347b9f08c49aecb5ba94e084a7, type: 3}
   m_Color: {r: 0.3921569, g: 0.3921569, b: 0.3921569, a: 0.7411765}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 30.973633, y: 14.698728}
+  m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1521,7 +1521,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.48155746, y: -0.2512747}
+  m_Offset: {x: -0.53236246, y: -0.2512747}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1531,7 +1531,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.596885, y: 3.8105295}
+  m_Size: {x: 1.495275, y: 3.8105295}
   m_EdgeRadius: 0
 --- !u!1 &1053862235
 GameObject:
@@ -1769,7 +1769,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.08619559, y: 0.0021842122}
+  m_Offset: {x: 0.08619559, y: 0.07642758}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1779,7 +1779,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3.453881, y: 2.5556316}
+  m_Size: {x: 3.453881, y: 2.4071448}
   m_EdgeRadius: 0
 --- !u!1 &1240244616
 GameObject:
@@ -2286,7 +2286,7 @@ GameObject:
   - component: {fileID: 1429683376}
   - component: {fileID: 1429683377}
   m_Layer: 0
-  m_Name: DeBonk Sprite
+  m_Name: ClubRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2355,7 +2355,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5485319108022510092, guid: 15c981701acaf3f4b840cf2f1f7d3446, type: 3}
+  m_Sprite: {fileID: 5485319108022510092, guid: 263de71ef4ed93d40aee62dccdea54e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2746,7 +2746,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.4774052, y: -0.19931364}
+  m_Offset: {x: 0.5884928, y: -0.19931364}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2756,7 +2756,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.6051896, y: 4.084159}
+  m_Size: {x: 1.3830143, y: 4.084159}
   m_EdgeRadius: 0
 --- !u!1 &1695919696
 GameObject:
@@ -2949,7 +2949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   healthSlider: {fileID: 1240244618}
   healthText: {fileID: 612207831}
-  maxHealth: 10
+  maxHealth: 100
 --- !u!1 &1747144973
 GameObject:
   m_ObjectHideFlags: 0

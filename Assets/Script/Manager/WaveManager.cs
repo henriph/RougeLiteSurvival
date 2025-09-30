@@ -53,7 +53,7 @@ public class WaveManager : MonoBehaviour
     private void StartWave(int waveIndex)
     {
         Debug.Log("Start Wave " +  waveIndex);
-        string waveString = "Wave " + (waveIndex + 1).ToString();
+        string waveString = "Wave " + (waveIndex + 1).ToString() + " / " + waves.Length.ToString();
         ui.UpdateWaveText(waveString);
 
         localCounters.Clear();
