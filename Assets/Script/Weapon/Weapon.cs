@@ -22,15 +22,15 @@ public class Weapon : MonoBehaviour
     [SerializeField] private LayerMask enemyMask;
 
     [Header(" Attacks ")]
-    [SerializeField] private int weaponDamage;
+    [SerializeField] protected int weaponDamage;
     [SerializeField] private Animator animator;
-    [SerializeField] private float attackFrequency;
-    private float attackDelay;
-    private float attackTimer;
+    [SerializeField] protected float attackFrequency;
+    protected float attackDelay;
+    protected float attackTimer;
     private List<Enemy> damageEnemies = new List<Enemy>();
 
     [Header(" Animations ")]
-    [SerializeField] private float aimLerp;
+    [SerializeField] protected float aimLerp;
 
     [Header(" Debug ")]
     [SerializeField] private bool gizmos;
@@ -58,7 +58,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    private Enemy ClosestEnemy()
+    protected Enemy ClosestEnemy()
     {
         Enemy closestEnemy = null;
 
