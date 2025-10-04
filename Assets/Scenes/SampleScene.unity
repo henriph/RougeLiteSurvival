@@ -493,7 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb25be27bbff4841af395d30e14ad55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeWeapon
-  range: 2
+  range: 2.86
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
@@ -503,7 +503,6 @@ MonoBehaviour:
   aimLerp: 17
   gizmos: 1
   hitDetectionTransform: {fileID: 1747144974}
-  hitDectionRadius: 0.3
   hitCollider: {fileID: 1747144975}
 --- !u!1 &413771828
 GameObject:
@@ -763,6 +762,51 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 4.0327673, y: 2.1515265}
   m_EdgeRadius: 0
+--- !u!1 &508387196
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 508387197}
+  - component: {fileID: 508387198}
+  m_Layer: 0
+  m_Name: DropManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &508387197
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508387196}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2059504745}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &508387198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508387196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25207426f7675bf4fb5b30b39a25fd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DropManager
+  candyPrefab: {fileID: 4754524371777580379, guid: f80e1e1fecef9ef4d8c337084d8f0db2, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,13 +1022,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6363e863e043b4c8857c80a9f60b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RangeWeapon
-  range: 5
+  range: 4.69
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
-  weaponDamage: 2
+  weaponDamage: 5
   animator: {fileID: 0}
-  attackFrequency: 2
+  attackFrequency: 10
   aimLerp: 17
   gizmos: 1
   shootingPoint: {fileID: 264325134}
@@ -3014,6 +3058,7 @@ GameObject:
   - component: {fileID: 1742308281}
   - component: {fileID: 1742308284}
   - component: {fileID: 1742308286}
+  - component: {fileID: 1742308287}
   - component: {fileID: 1742308285}
   m_Layer: 7
   m_Name: Player
@@ -3162,6 +3207,18 @@ MonoBehaviour:
   healthSlider: {fileID: 1240244618}
   healthText: {fileID: 612207831}
   maxHealth: 100
+--- !u!114 &1742308287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742308279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d53df5ff57d9a247afebf831dec7478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDetection
 --- !u!1 &1747144973
 GameObject:
   m_ObjectHideFlags: 0
@@ -3304,6 +3361,7 @@ Transform:
   m_Children:
   - {fileID: 1611180890}
   - {fileID: 681592766}
+  - {fileID: 508387197}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2077646892

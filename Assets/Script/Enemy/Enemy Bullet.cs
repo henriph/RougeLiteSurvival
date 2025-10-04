@@ -17,16 +17,6 @@ public class EnemyBullet : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         bulletCollider = GetComponent<Collider2D>();
     }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Configure(RangeEnemyAttack rangeEnemyAttack)
     {
@@ -48,13 +38,23 @@ public class EnemyBullet : MonoBehaviour
             player.TakeDamage(damage);
             
             bulletCollider.enabled = false;
-            rangeEnemyAttack.ReleaseBullet(this);
+            Release();
 
 
         } else if(collider.CompareTag("Wall"))
         {
-            rangeEnemyAttack.ReleaseBullet(this);
+            Release();
         }
+    }
+
+    private void Release()
+    {
+        if(!gameObject.activeSelf)
+        {
+            return;
+        }
+
+        rangeEnemyAttack.ReleaseBullet(this);
     }
 
     public void Reload()

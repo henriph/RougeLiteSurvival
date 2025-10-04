@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public abstract class Enemy : MonoBehaviour
     protected int health;
     [SerializeField] protected TextMeshPro healthText;
 
+    [Header(" Actions ")]
+    public static Action<Vector2> onPassAway;
 
     [Header(" Debug ")]
     [SerializeField] protected bool gizmos;
@@ -64,8 +67,15 @@ public abstract class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
-            Destroy(gameObject);
+            PassAway();
         }
+    }
+
+    private void PassAway()
+    {
+        onPassAway?.Invoke(transform.position);
+
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmos()

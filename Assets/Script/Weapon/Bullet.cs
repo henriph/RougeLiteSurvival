@@ -7,6 +7,8 @@ public class Bullet : MonoBehaviour
     [Header(" Element ")]
     private Rigidbody2D rig;
     private Collider2D bulletCollider;
+    private RangeWeapon rangeWeapon;
+    private Enemy target;
 
     [Header(" Settings ")]
     [SerializeField] float bulletSpeed;
@@ -19,17 +21,6 @@ public class Bullet : MonoBehaviour
         bulletCollider = GetComponent<Collider2D>();
     }
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Shoot(int damage, Vector2 direction)
     {
         this.damage = damage;
@@ -40,11 +31,33 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
+        if (target != null)
+        {
+            return;
+        }
         if (IsInLayerMask(collider.gameObject.layer, enemyMask))
         {
-            Attack(collider.GetComponent<Enemy>());
-            Destroy(gameObject);
+            target = collider.GetComponent<Enemy>();
+
+            Attack(target);
+
+            bulletCollider.enabled = false;
+            Release();
+
         }
+        else if (collider.CompareTag("Wall"))
+        {
+            Release();
+        }
+    }
+
+
+    private void Release()
+    {
+        if (!gameObject.activeSelf)
+            return;
+
+        rangeWeapon.ReleaseBullet(this);
     }
 
     private bool IsInLayerMask(int layer, LayerMask layerMask)
@@ -54,5 +67,18 @@ public class Bullet : MonoBehaviour
 
     private void Attack(Enemy enemy) {
         enemy.TakeDamage(damage);
+    }
+
+    public void Configure(RangeWeapon rangeWeapon)
+    {
+        this.rangeWeapon = rangeWeapon;
+    }
+
+    public void Reload()
+    {
+        target = null;
+
+        rig.linearVelocity = Vector2.zero;
+        bulletCollider.enabled = true;
     }
 }

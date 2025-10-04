@@ -32,12 +32,6 @@ public class RangeEnemyAttack : MonoBehaviour
 
         bulletPool = new ObjectPool<EnemyBullet>(CreateFunction, ActionOnGet, ActionOnRelease, ActionOnDestroy);
     }
-    
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private EnemyBullet CreateFunction()
     {

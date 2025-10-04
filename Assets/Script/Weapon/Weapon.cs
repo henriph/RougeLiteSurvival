@@ -25,11 +25,6 @@ public abstract class Weapon : MonoBehaviour
         attackDelay = 1f / attackFrequency;
     }
 
-    private void Update()
-    {
-        
-    }
-
     protected Enemy ClosestEnemy()
     {
         Enemy closestEnemy = null;

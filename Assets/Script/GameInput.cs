@@ -15,16 +15,22 @@ public class GameInput : MonoBehaviour
 
     private void OnEnable()
     {
-        playerControls.Enable();
-        playerControls.Player.Move.performed += OnMovementPerformed;
-        playerControls.Player.Move.canceled += OnMovementCancelled;
+        if (playerControls != null)
+        {
+            playerControls.Enable();
+            playerControls.Player.Move.performed += OnMovementPerformed;
+            playerControls.Player.Move.canceled += OnMovementCancelled;
+        }
     }
 
     private void OnDisable()
     {
-        playerControls.Player.Move.performed -= OnMovementPerformed;
-        playerControls.Player.Move.canceled -= OnMovementCancelled;
-        playerControls.Disable();
+        if (playerControls != null)
+        {
+            playerControls.Player.Move.performed -= OnMovementPerformed;
+            playerControls.Player.Move.canceled -= OnMovementCancelled;
+            playerControls.Disable();
+        }
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext obj)

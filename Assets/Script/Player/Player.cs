@@ -25,11 +25,6 @@ public class Player : MonoBehaviour
        
     }
 
-    private void Update()
-    {
-        Vector2 inputMovement = gameInput.InputMovementNormalized;
-    }
-
     private void FixedUpdate()
     {
 

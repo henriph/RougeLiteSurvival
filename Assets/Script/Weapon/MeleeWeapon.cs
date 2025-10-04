@@ -26,7 +26,6 @@ public class MeleeWeapon : Weapon
         state = State.Idle;
     }
 
-    
     void Update()
     {
         switch (state)
