@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
-public class Candy : MonoBehaviour, ICollectable
+public class Cash : MonoBehaviour, ICollectable
 {
     private bool collected;
 
@@ -16,12 +15,12 @@ public class Candy : MonoBehaviour, ICollectable
         StartCoroutine(MoveTowardPlayer(playerTransform));
     }
 
-   IEnumerator MoveTowardPlayer(Transform playerTransform)
+    IEnumerator MoveTowardPlayer(Transform playerTransform)
     {
         float timer = 0;
         Vector2 initialPoint = transform.position;
-        
-        while(timer < 1)
+
+        while (timer < 1)
         {
             transform.position = Vector2.Lerp(initialPoint, playerTransform.position, timer);
             timer += Time.deltaTime;
@@ -37,4 +36,3 @@ public class Candy : MonoBehaviour, ICollectable
         gameObject.SetActive(false);
     }
 }
-

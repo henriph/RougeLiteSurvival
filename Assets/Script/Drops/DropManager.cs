@@ -1,10 +1,15 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+
+using Random = UnityEngine.Random;
 
 public class DropManager : MonoBehaviour
 {
     [Header(" Elements ")]
     [SerializeField] private Candy candyPrefab;
+    [SerializeField] private Cash cashPrefab;
 
     private void Awake()
     {
@@ -28,6 +33,10 @@ public class DropManager : MonoBehaviour
     }
     private void EnemyPassAwayCallBack(Vector2 enemyPosition)
     {
-        Instantiate(candyPrefab, enemyPosition, Quaternion.identity, transform);
+        bool shouldSpawnCash = Random.Range(0, 101) <= 20;
+
+        GameObject droppable = shouldSpawnCash ? cashPrefab.gameObject : candyPrefab.gameObject;
+
+        GameObject droppableInstance = Instantiate(droppable, enemyPosition, Quaternion.identity, transform);
     }
 }
