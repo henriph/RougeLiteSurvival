@@ -1,7 +1,11 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class Candy : MonoBehaviour
 {
+    private bool collected;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,4 +17,36 @@ public class Candy : MonoBehaviour
     {
         
     }
+
+    public void Collect(Transform playerTransform)
+    {
+        if (collected)
+            return;
+
+        collected = true;
+
+        StartCoroutine(MoveTowardPlayer(playerTransform));
+    }
+
+   IEnumerator MoveTowardPlayer(Transform playerTransform)
+    {
+        float timer = 0;
+        Vector2 initialPoint = transform.position;
+        
+        while(timer < 1)
+        {
+            transform.position = Vector2.Lerp(initialPoint, playerTransform.position, timer);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+
+        Collected();
+    }
+
+    private void Collected()
+    {
+        gameObject.SetActive(false);
+    }
 }
+
