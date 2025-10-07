@@ -1,38 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using System;
 
-public class Cash : MonoBehaviour, ICollectable
+public class Cash : Droppable, ICollectable
 {
-    private bool collected;
+    [Header(" Actions ")]
+    public static Action<Cash> onCollected;
 
-    public void Collect(Transform playerTransform)
+    protected override void Collected()
     {
-        if (collected)
-            return;
-
-        collected = true;
-
-        StartCoroutine(MoveTowardPlayer(playerTransform));
-    }
-
-    IEnumerator MoveTowardPlayer(Transform playerTransform)
-    {
-        float timer = 0;
-        Vector2 initialPoint = transform.position;
-
-        while (timer < 1)
-        {
-            transform.position = Vector2.Lerp(initialPoint, playerTransform.position, timer);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-
-        Collected();
-    }
-
-    private void Collected()
-    {
-        gameObject.SetActive(false);
+        onCollected?.Invoke(this);
     }
 }

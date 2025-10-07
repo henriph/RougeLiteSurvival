@@ -808,6 +808,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DropManager
   candyPrefab: {fileID: 4754524371777580379, guid: f80e1e1fecef9ef4d8c337084d8f0db2, type: 3}
   cashPrefab: {fileID: 1258108266265195051, guid: 5c513defafbaee1448a14f90b033d8a3, type: 3}
+  chestPrefab: {fileID: -3482846543063765378, guid: 8c31163b4602e40488b1e244c0811e16, type: 3}
+  cashDropRate: 26.9
+  chestDropRate: 11.4
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2429,7 +2432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -25.050812}
+  m_AnchoredPosition: {x: 0, y: -25.050781}
   m_SizeDelta: {x: 169.71014, y: 50.101624}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1412312671
@@ -3222,6 +3225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDetection
   collectableCollider: {fileID: 1870714042}
+  playerCollider: {fileID: 1742308285}
 --- !u!1 &1747144973
 GameObject:
   m_ObjectHideFlags: 0

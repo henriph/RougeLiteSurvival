@@ -2,39 +2,16 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Candy : MonoBehaviour, ICollectable
+
+public class Candy : Droppable, ICollectable
 {
-    private bool collected;
+    [Header(" Actions ")]
+    public static Action<Candy> onCollected;
 
-    public void Collect(Transform playerTransform)
+    protected override void Collected()
     {
-        if (collected)
-            return;
-
-        collected = true;
-
-        StartCoroutine(MoveTowardPlayer(playerTransform));
+        onCollected?.Invoke(this);
     }
 
-   IEnumerator MoveTowardPlayer(Transform playerTransform)
-    {
-        float timer = 0;
-        Vector2 initialPoint = transform.position;
-        
-        while(timer < 1)
-        {
-            transform.position = Vector2.Lerp(initialPoint, playerTransform.position, timer);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-
-        Collected();
-    }
-
-    private void Collected()
-    {
-        gameObject.SetActive(false);
-    }
 }
 
