@@ -78,6 +78,7 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
+            //GameManager.instance.WaveCompleteCallBack();
             StartWave(currentWaveIndex);
         }
     }
