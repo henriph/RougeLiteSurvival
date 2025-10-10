@@ -4,7 +4,7 @@ using UnityEngine;
 using NaughtyAttributes;
 
 [RequireComponent(typeof(WaveManagerUI))]
-public class WaveManager : MonoBehaviour
+public class WaveManager : MonoBehaviour, IGameStateListener
 {
     [Header(" Elements ")]
     [SerializeField] private Player player;
@@ -78,8 +78,7 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            //GameManager.instance.WaveCompleteCallBack();
-            StartWave(currentWaveIndex);
+            GameManager.instance.WaveCompletedCallBack();
         }
     }
 
@@ -133,6 +132,11 @@ public class WaveManager : MonoBehaviour
             child.SetParent(null);
             Object.Destroy(child.gameObject);
         }
+    }
+
+    public void GameStateChangedCallBack(GameState state)
+    {
+        Debug.Log($"Wave manager know game state is {state}");
     }
 }
 

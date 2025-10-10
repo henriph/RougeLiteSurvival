@@ -1605,7 +1605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
   player: {fileID: 1742308284}
-  waveDuration: 20
+  waveDuration: 10
   waves:
   - name: Wave 00
     segments:
