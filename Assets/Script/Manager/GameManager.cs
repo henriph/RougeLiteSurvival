@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void StartGame()             => SetGameState(GameState.GAME);
+    public void StartWeaponSelection()  => SetGameState(GameState.WEAPONSELECTION);
+
     public void SetGameState(GameState state)
     {
         IEnumerable<IGameStateListener> gameStateListeners = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IGameStateListener>();
@@ -47,6 +51,11 @@ public class GameManager : MonoBehaviour
         {
             SetGameState(GameState.SHOP);
         }
+    }
+
+    public void ManageGameOver()
+    {
+        SceneManager.LoadScene(0);
     }
 }
 

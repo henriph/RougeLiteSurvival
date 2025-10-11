@@ -26,7 +26,7 @@ public class WaveManager : MonoBehaviour, IGameStateListener
 
     void Start()
     {
-        StartWave(currentWaveIndex);
+        
     }
 
    
@@ -79,6 +79,11 @@ public class WaveManager : MonoBehaviour, IGameStateListener
         {
             GameManager.instance.WaveCompletedCallBack();
         }
+    }
+
+    private void StartNextWave()
+    {
+        StartWave(currentWaveIndex);
     }
 
     private void ManageCurrentWave()
@@ -135,7 +140,18 @@ public class WaveManager : MonoBehaviour, IGameStateListener
 
     public void GameStateChangedCallBack(GameState state)
     {
-        Debug.Log($"Wave manager know game state is {state}");
+        switch(state)
+        {
+            case GameState.MENU:
+                break;
+            case GameState.GAME:
+                StartNextWave();
+                break;
+            case GameState.WAVETRANSITION:
+                break;
+            case GameState.SHOP:
+                break;
+        }
     }
 }
 

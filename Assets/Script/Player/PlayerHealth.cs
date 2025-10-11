@@ -31,8 +31,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void PassAway()
     {
-        Debug.Log("Ded");
-        SceneManager.LoadScene(0);
+        GameManager.instance.SetGameState(GameState.GAMEOVER);
     }
 
     private void UpdateHealthBarUI()
