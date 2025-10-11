@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
-using NaughtyAttributes;
 
 [RequireComponent(typeof(WaveManagerUI))]
 public class WaveManager : MonoBehaviour, IGameStateListener
@@ -151,7 +150,7 @@ public struct Wave
 [System.Serializable]
 public struct WaveSegment
 {
-    [MinMaxSlider(0, 100)] public Vector2 tStartEnd;
+    public Vector2 tStartEnd;
     public float spawnFrequency;
     public GameObject prefab;
 }
