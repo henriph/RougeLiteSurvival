@@ -4,7 +4,7 @@ public class PlayerDetection : MonoBehaviour
 {
     [Header(" Colliders ")]
     [SerializeField] private CircleCollider2D collectableCollider;
-    [SerializeField] private CircleCollider2D playerCollider;
+    [SerializeField] private BoxCollider2D playerCollider;
     private void OnTriggerEnter2D(Collider2D collider)
     {
         //Check if the object entering the trigger is the Candy component.

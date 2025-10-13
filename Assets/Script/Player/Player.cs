@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [Header(" Components ")]
     Rigidbody2D rb;
     private PlayerHealth playerHealth;
-    private CircleCollider2D playerCollider;
+    private BoxCollider2D playerCollider;
     private PlayerLevel playerLevel;
 
     [Header(" Elements ")]
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
 
         playerHealth = GetComponent<PlayerHealth>();
         rb = GetComponent<Rigidbody2D>();
-        playerCollider = GetComponent<CircleCollider2D>();
+        playerCollider = GetComponent<BoxCollider2D>();
         playerLevel = GetComponent<PlayerLevel>();
     }
     private void Start()
