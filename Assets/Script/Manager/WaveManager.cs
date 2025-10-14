@@ -74,6 +74,7 @@ public class WaveManager : MonoBehaviour, IGameStateListener
         if (currentWaveIndex >= waves.Length)
         {
             Debug.Log("Waves completed!");
+
         }
         else
         {
@@ -150,6 +151,10 @@ public class WaveManager : MonoBehaviour, IGameStateListener
             case GameState.WAVETRANSITION:
                 break;
             case GameState.SHOP:
+                break;
+            case GameState.GAMEOVER:
+                isTimerOn = false;
+                DefeatAllEnemies();
                 break;
         }
     }
