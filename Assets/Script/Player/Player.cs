@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     [Header(" Elements ")]
     [SerializeField] GameInput gameInput;
+    [SerializeField] private Animator animator;
 
     [Header(" Settings ")]
     [SerializeField] float moveSpeed = 6;
@@ -40,8 +41,40 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Vector2 inputMovement = gameInput.InputMovementNormalized;
+        rb.linearVelocity = inputMovement * moveSpeed;
 
-        rb.linearVelocity = gameInput.InputMovementNormalized * moveSpeed;
+        HandleMovement(inputMovement);
+        
+    }
+
+    private void HandleMovement(Vector2 inputMovement)
+    {
+        IsRunning(inputMovement);
+        FlipCharacterX(inputMovement);
+        
+    }
+    private void FlipCharacterX(Vector2 inputMovement)
+    {
+        if (inputMovement.x > 0.01f)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (inputMovement.x < -0.01f)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+    }
+
+    private void IsRunning(Vector2 inputMovement)
+    {
+        if(inputMovement != Vector2.zero)
+        {
+            animator.SetBool("isRunning", true);
+        } else
+        {
+            animator.SetBool("isRunning", false);
+        }
     }
 
     public void TakeDamage(int damage)
