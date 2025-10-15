@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour, IGameStateListener
     [Header(" Panels ")]
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private GameObject gamePanel;
+    [SerializeField] private GameObject stageCompletePanel;
     [SerializeField] private GameObject shopPanel;
     [SerializeField] private GameObject waveTransitionPanel;
     [SerializeField] private GameObject weaponSelectionPanel;
@@ -23,7 +24,8 @@ public class UIManager : MonoBehaviour, IGameStateListener
             shopPanel,
             waveTransitionPanel,
             weaponSelectionPanel,
-            gameOverPanel
+            gameOverPanel,
+            stageCompletePanel
         });
     }
 
@@ -52,6 +54,9 @@ public class UIManager : MonoBehaviour, IGameStateListener
                 break;
             case GameState.GAME:
                 ShowPanel(gamePanel);
+                break;
+            case GameState.STAGECOMPLETE:
+                ShowPanel(stageCompletePanel);
                 break;
             case GameState.WAVETRANSITION:
                 ShowPanel(waveTransitionPanel);

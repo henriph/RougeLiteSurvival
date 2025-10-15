@@ -39,6 +39,11 @@ public class GameManager : MonoBehaviour
         {
             gameStateListener.GameStateChangedCallBack(state);
         }
+
+        if(state == GameState.GAMEOVER)
+        {
+            ManageGameOver();
+        }
     }
 
     public void WaveCompletedCallBack()

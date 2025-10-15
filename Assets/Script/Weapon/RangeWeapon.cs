@@ -9,6 +9,11 @@ public class RangeWeapon : Weapon
 
     [Header(" Bullet Pooling ")]
     private ObjectPool<Bullet> bulletPool;
+
+    [Header ("Aiming Mode")]
+    [SerializeField] private bool manualMode = false;
+
+    private bool isShootingInputPressed => Input.GetMouseButton(0);
     void Start()
     {
         attackDelay = 1f / attackFrequency;
@@ -18,7 +23,13 @@ public class RangeWeapon : Weapon
 
     void Update()
     {
-        AutoAim();
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            manualMode = !manualMode;
+            Debug.Log($"Weapon mode switched to: {(manualMode ? "Manual (Mouse Aim & Click)" : "Auto (Closest Enemy & Auto Fire)")}");
+        }
+
+        ManageAimingAndShooting();
     }
 
 
@@ -53,23 +64,59 @@ public class RangeWeapon : Weapon
         bulletPool.Release(bullet);
     }
 
+    private Vector2 GetMouseWorldPosition()
+    {
+        // Assumes your Camera.main is set up for 2D.
+        // ScreenToWorldPoint converts mouse position (Input.mousePosition) to world coordinates.
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = Camera.main.nearClipPlane; // Essential for correct conversion in 3D-projected 2D
+        return Camera.main.ScreenToWorldPoint(mousePos);
+    }
 
-    private void AutoAim()
+    private void ManageAimingAndShooting()
     {
         Vector2 targetUpVector = Vector3.up;
-        Enemy closestEnemy = ClosestEnemy();
+        bool shouldAutoShoot = false; // Only true in auto mode
 
-        if (closestEnemy != null)
+        if (manualMode)
         {
-            targetUpVector = (closestEnemy.transform.position - transform.position).normalized;
-            
-            ManageShooting();
+            // --- MANUAL MODE (Mouse Aim) ---
+            Vector2 mouseWorldPosition = GetMouseWorldPosition();
+            targetUpVector = (mouseWorldPosition - (Vector2)transform.position).normalized;
+
+            // MANAGE MANUAL SHOOTING
+            HandleManualShooting();
         }
-        
+        else
+        {
+            // --- AUTO MODE (Closest Enemy Aim) ---
+            Enemy closestEnemy = ClosestEnemy();
+
+            if (closestEnemy != null)
+            {
+                targetUpVector = (closestEnemy.transform.position - transform.position).normalized;
+                shouldAutoShoot = true; // Auto-shoot only when an enemy is found
+            }
+
+            // MANAGE AUTO SHOOTING
+            if (shouldAutoShoot)
+            {
+                HandleAutoShooting();
+            }
+            else
+            {
+                // Optional: reset timer if no enemy to ensure immediate shot upon finding one
+                attackTimer = attackDelay;
+            }
+        }
+
+        // Apply aiming rotation for both modes
         transform.up = Vector3.Lerp(transform.up, targetUpVector, Time.deltaTime * aimLerp);
     }
 
-    private void ManageShooting()
+
+    // Handles the original auto-shooting logic (renamed from ManageShooting)
+    private void HandleAutoShooting()
     {
         attackTimer += Time.deltaTime;
         if (attackTimer >= attackDelay)
@@ -79,9 +126,30 @@ public class RangeWeapon : Weapon
         }
     }
 
+    // Handles the manual (click-based) shooting logic
+    private void HandleManualShooting()
+    {
+        // Check if the fire button is pressed (e.g., left mouse button)
+        if (isShootingInputPressed)
+        {
+            attackTimer += Time.deltaTime;
+            if (attackTimer >= attackDelay)
+            {
+                attackTimer = 0f;
+                Shoot();
+            }
+        }
+        else
+        {
+            // Optional: Reset timer for immediate shot on the next click
+            attackTimer = attackDelay;
+        }
+    }
+
     private void Shoot()
     {
         Bullet bulletInstance = bulletPool.Get();
         bulletInstance.Shoot(weaponDamage, transform.up);
     }
+
 }

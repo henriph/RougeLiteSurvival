@@ -74,7 +74,7 @@ public class WaveManager : MonoBehaviour, IGameStateListener
         if (currentWaveIndex >= waves.Length)
         {
             Debug.Log("Waves completed!");
-
+            GameManager.instance.SetGameState(GameState.STAGECOMPLETE);
         }
         else
         {
@@ -119,14 +119,24 @@ public class WaveManager : MonoBehaviour, IGameStateListener
 
     private Vector2 GetSpawnPosition()
     {
-        Vector2 direction = Random.onUnitSphere;
-        Vector2 offset = direction.normalized * Random.Range(6, 10);
-        Vector2 targetPosition = (Vector2)player.transform.position + offset;
+        Vector2 playerPos = (Vector2)player.transform.position;
 
-        targetPosition.x = Mathf.Clamp(targetPosition.x, -14, 14);
-        targetPosition.y = Mathf.Clamp(targetPosition.y, -7, 7);
+        // The maximum visible distance is 6.92 (Orthographic Size).
+        // MIN_SPAWN_RADIUS must be LARGER than the camera's half-height or half-width.
+        // Let's use 8.0f as the guaranteed off-screen minimum.
+        const float MIN_SPAWN_RADIUS = 15.0f;
 
-        return targetPosition;
+        // Define a random buffer to spread enemies out
+        const float RANDOM_BUFFER = 5.0f;
+
+        // Calculate a random distance: 8 units (guaranteed off-screen) to 13 units
+        float spawnDistance = MIN_SPAWN_RADIUS + Random.Range(0f, RANDOM_BUFFER);
+
+        // Get a random direction on the unit circle
+        Vector2 direction = Random.onUnitSphere.normalized;
+
+        // Calculate the final position: PlayerPos + (RandomDirection * SpawnDistance)
+        return playerPos + direction * spawnDistance;
     }
 
     private void DefeatAllEnemies()
